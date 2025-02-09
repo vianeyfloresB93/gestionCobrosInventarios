@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usuariocn10
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: usuariocn10
+  template:
+    metadata:
+      labels:
+        app: usuariocn10
+    spec:
+      containers:
+        - name: usuariocn10
+          image: vianeyflores/usuariocn10:1.0
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_DATA_MONGODB_URI
+              value: "mongodb://admin:admin123@mongodb-diplomado.paas.nube.unam.mx:27017/cobrosInventarios"

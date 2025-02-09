@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+    ports:
+      - "27017:27017"
+  app:
+    build: .
+    container_name: app
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URL: mongodb://admin:admin123@mongo:27017/cobrosInventarios
+    ports:
+      - "8080:8080"
