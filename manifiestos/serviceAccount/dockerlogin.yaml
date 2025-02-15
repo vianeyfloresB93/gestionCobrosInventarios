@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: dockerconfig-secret
+  namespace: diploe2-vgfc
+stringData:
+  config.json: |
+    {
+      "auths": {
+        "https://index.docker.io/v1/": {
+          "auth": "dmlhbmV5ZmxvcmVzOkVsZWN0cm9ob3VzZTFf"
+        }
+      }
+    }
