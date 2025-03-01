@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: maven
+  namespace: diploe2-vgfc
+spec:
+  params:
+    - name: GOALS
+      type: array
+      description: "Goals to pass to Maven"
+      default:
+        - clean
+        - package
+    - name: MAVEN_IMAGE
+      type: string
+      description: "Maven Docker image to use"
+      default: gcr.io/cloud-builders/mvn@sha256:8f38a2667125a8d83f6e1997847fedb6a06f041c90e2244884153d85d95f869b
+  steps:
+    - name: maven-build
+      image: $(params.MAVEN_IMAGE)
+  workspaces:
+    - name: maven-settings
+    - name: output
