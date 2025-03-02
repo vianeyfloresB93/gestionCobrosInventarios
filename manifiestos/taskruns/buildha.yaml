@@ -1,0 +1,44 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: buildah
+  namespace: diploe2-vgfc
+spec:
+  params:
+    - name: IMAGE
+      description: "The name of the image to build"
+      type: string
+    - name: TLSVERIFY
+      description: "Verify TLS (true or false)"
+      type: string
+      default: "true"
+    - name: STORAGE_DRIVER
+      description: "Storage driver to use with Buildah"
+      type: string
+      default: "overlay"
+  workspaces:
+    - name: source
+      description: "The source code to build"
+    - name: dockerconfig
+      description: "Docker config to use for pushing images"
+  steps:
+    - name: buildah-build
+      image: quay.io/buildah/stable:latest
+      script: |
+        #!/usr/bin/env sh
+        buildah bud --tls-verify=$(params.TLSVERIFY) --storage-driver=$(params.STORAGE_DRIVER) -t $(params.IMAGE) $(workspaces.source.path)
+    - name: buildah-push
+      image: quay.io/buildah/stable:latest
+      script: |
+        #!/usr/bin/env sh
+        buildah push --tls-verify=$(params.TLSVERIFY) $(params.IMAGE) docker://$(params.IMAGE)
+      env:
+        - name: REGISTRY_AUTH_FILE
+          value: "dockerconfig-secret/config.json"
+      volumeMounts:
+        - name: dockerconfig
+          mountPath: dockerconfig-secret
+  volumes:
+    - name: dockerconfig
+      emptyDir: {}
+
