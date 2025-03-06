@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  generateName: update-deployment-image-
+  namespace: diploe2-vgfc
+spec:
+  serviceAccountName: tekton-sa
+  taskRef:
+    name: kubernetes-actions
+  params:
+    - name: script
+      value: |
+        kubectl patch deployment $1 --patch='{"spec":{"template":{"spec":{"containers":[{"name":"my-deployment2-6c665787bc-5zs79","image":"docker.io/vianeyflores/usuariocn10:1.0"}]}}}}'
+    - name: args
+      value:
+        - my-deployment2-6c665787bc-5zs79
+        - docker.io/vianeyflores/usuariocn10:1.0
+  workspaces:
+    - name: kubeconfig-dir
+      emptyDir: {}
+    - name: manifest-dir
+      emptyDir: {}

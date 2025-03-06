@@ -1,0 +1,31 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: kubernetes-actions
+  namespace: diploe2-vgfc
+spec:
+  params:
+    - name: script
+      description: "Script to run"
+      type: string
+  workspaces:
+    - name: kubeconfig-dir
+      description: "Directory to store kubeconfig"
+    - name: manifest-dir
+      description: "Directory to store manifests"
+  steps:
+    - name: run-script
+      image: bitnami/kubectl:latest
+      script: |
+        #!/bin/sh
+        $(params.script)
+      volumeMounts:
+        - name: kubeconfig-dir
+          mountPath: /root/.kube
+        - name: manifest-dir
+          mountPath: /workspace
+  volumes:
+    - name: kubeconfig-dir
+      emptyDir: {}
+    - name: manifest-dir
+      emptyDir: {}
