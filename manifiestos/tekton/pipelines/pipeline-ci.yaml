@@ -1,0 +1,78 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: pipelinerun-ci
+  namespace: diploe2-vgfc
+spec:
+  description: |
+    Esta pipeline realiza las siguientes tareas:
+    1. Clona el repositorio (git-clone)
+    2. Compila y empaqueta la aplicación (maven)
+    3. Construye la imagen y la empuja al Hub (buildah)
+  params:
+    - name: repo-url
+      type: string
+    - name: branch
+      type: string
+    - name: image-url
+      type: string
+    - name: maven-image
+      type: string
+  workspaces:
+    - name: workspace  # Se declara correctamente el workspace requerido por las tareas
+  tasks:
+    - name: fix-permissions
+      taskSpec:
+        steps:
+          - name: fix-permissions
+            image: busybox
+            script: |
+              #!/bin/sh
+              echo "Esta pipeline realiza git-clone - maven - buildah"
+              chown -R $(id -u):$(id -g) /workspace/workspace
+      workspaces:
+        - name: workspace
+          workspace: workspace
+    - name: fetch-repository
+      taskRef:
+        name: git-clone
+        kind: Task
+      params:
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.branch)
+      workspaces:
+        - name: workspace
+          workspace: workspace
+    - name: build-and-package
+      taskRef:
+        name: maven
+        kind: Task
+      runAfter:
+        - fetch-repository
+      params:
+        - name: GOALS
+          value:
+            - clean
+            - package
+        - name: MAVEN_IMAGE
+          value: $(params.maven-image)
+      workspaces:
+        - name: workspace
+          workspace: workspace
+    - name: buildah-build
+      taskRef:
+        name: buildah
+        kind: Task
+      runAfter:
+        - build-and-package
+      params:
+        - name: IMAGE
+          value: $(params.image-url)
+        - name: DOCKERFILE
+          value: ./Dockerfile
+      workspaces:
+        - name: workspace
+          workspace: workspace
+

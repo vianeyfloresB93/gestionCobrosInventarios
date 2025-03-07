@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: pipelinerun-ci-
+  namespace: diploe2-vgfc
+spec:
+  serviceAccountName: tekton-sa
+  pipelineRef:
+    name: pipelinerun-ci
+  params:
+    - name: repo-url
+      value: "https://github.com/vianeyfloresB93/gestionCobrosInventarios.git"
+    - name: branch
+      value: "main"
+    - name: image-url
+      value: "docker.io/vianeyflores/usuariocn10:1.1"
+    - name: maven-image
+      value: "gcr.io/cloud-builders/mvn"
+  workspaces:
+    - name: workspace
+      persistentVolumeClaim: 
+        claimName: workspace
