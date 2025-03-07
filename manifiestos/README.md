@@ -431,8 +431,126 @@ kubectl get pods -n {{namespace}}
 #verificamos los logs 
 kubecetl logs -n {{namespace}} {{nombre del pod}}
 
+########################################################
+
+#Creacion de Pipelines de tarea que realice un git-clone, utilice imagen de maven para empaquetar nuestro proyecto y realice un buildha al hub de docker 
+<!-- apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: pipelinerun-ci
+  namespace: diploe2-vgfc
+spec:
+  description: |
+    Esta pipeline realiza las siguientes tareas:
+    1. Clona el repositorio (git-clone)
+    2. Compila y empaqueta la aplicación (maven)
+    3. Construye la imagen y la empuja al Hub (buildah)
+  params:
+    - name: repo-url
+      type: string
+    - name: branch
+      type: string
+    - name: image-url
+      type: string
+    - name: maven-image
+      type: string
+  workspaces:
+    - name: workspace
+  tasks:
+    - name: fix-permissions
+      taskSpec:
+        steps:
+          - name: fix-permissions
+            image: busybox
+            script: |
+              #!/bin/sh
+              echo "Ajustando permisos en /workspace..."
+              chown -R $(id -u):$(id -g) /workspace
+      workspaces:
+        - name: workspace
+          workspace: workspace
+    - name: fetch-repository
+      taskRef:
+        name: git-clone
+        kind: Task
+      params:
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.branch)
+      workspaces:
+        - name: workspace
+          workspace: workspace
+    - name: build-and-package
+      taskRef:
+        name: maven
+        kind: Task
+      runAfter:
+        - fetch-repository
+      params:
+        - name: GOALS
+          value:
+            - clean
+            - package
+        - name: MAVEN_IMAGE
+          value: $(params.maven-image)
+      workspaces:
+        - name: workspace
+          workspace: workspace
+    - name: buildah-build
+      taskRef:
+        name: buildah
+        kind: Task
+      runAfter:
+        - build-and-package
+      params:
+        - name: IMAGE
+          value: $(params.image-url)
+        - name: DOCKERFILE
+          value: ./Dockerfile
+      workspaces:
+        - name: workspace
+          workspace: workspace
+-->
+#definimos un pipeline run que ejecute el pipeline ci
+<!-- apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: pipelinerun-ci-
+  namespace: {{namespace}}
+spec:
+  serviceAccountName: tekton-sa
+  pipelineRef:
+    name: pipelinerun-ci
+  params:
+    - name: repo-url
+      value: "{{repo url}"
+    - name: branch
+      value: "main"
+    - name: image-url
+      value: "docker.io/{{user}}/{{tag}}"
+    - name: maven-image
+      value: "gcr.io/cloud-builders/mvn"
+  workspaces:
+    - name: workspace
+      persistentVolumeClaim: 
+        claimName: workspace
+
+-->
+# ejecutamos los comandos
+#aplicamos 
+ 
+ kubectl apply -f nombre.yaml / kubectl create -f nombre.yaml
   
-  
+#verificamos si se ha ejecutado correctamente 
+#en caso de no tener instalado se puede comprobar con el comando de kubernetes 
+kubectl get pipeline -n {{namespace}
+kubectl  get pipelinerun -n {{namespace}}
+kubectl get pods -n {{namespace}}
+
+#verificamos los logs 
+kubecetl logs -n {{namespace}} {{nombre del pod}}
+kubectl describe pipelinerun {{pipelinerun}} -n {{namespace}}
   
   
   
