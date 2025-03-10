@@ -56,6 +56,9 @@ git commit -m "descripción"
 #enviar al repositorio los nuevos cambios 
 git push origin <rama>
 
+# Laboratorio 4_ prueba pipeline e2e
+> Verificación de mi CI/CD desde mi repositorio vianeyfloresB93 gestionCobrosInventarios
+
 
 # prueba trigger Ejercicio9_tekton_event_listener
 #prueba trigger 
