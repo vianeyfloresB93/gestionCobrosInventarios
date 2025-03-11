@@ -355,7 +355,7 @@
 
 
 
-#Ejercicio6 Contruye y empuja 
+# Ejercicio6 Contruye y empuja 
   
 #Creamos la task de buildah 
   
