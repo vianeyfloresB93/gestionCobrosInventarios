@@ -125,7 +125,9 @@
    kubectl apply -f nombreArchivo.yaml 
 #comando para ver los logs 
   tkn taskrun logs nombre -f 
+  
 #image ServiceAccount
+
 (images/Ejercicio6_ServiceAccount.PNG) [https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Ejercicio6_ServiceAccount.PNG] 
   
 # Ejercicio 6. Hello World#
@@ -166,7 +168,9 @@
   
 #visualizamos los logs 
   tkn taskrun logs hello-world-run -f 
+
   #images Hello World 
+
  (images/Ejercicio6_HelloWorldPod.PNG) [https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Ejercicio6_HelloWorldPod.JPG] 
  (images/Ejercicio6_HelloWorldLog.PNG) [https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Practica6_HelloWorldLog.JPG] 
  
@@ -195,8 +199,10 @@
   
 #verificamos los logs 
   kubecetl logs -n {{namespace}} {{nombre del pod}}
+
   
 #Image Git Clone 
+
 (images/Ejercicio6_gitClone.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Ejercicio6_gitClone.JPG]
   
 ## Ejercicio 6. tekton list dir 
@@ -344,7 +350,11 @@
 
 
 #image Build
+
 (images/jercicio6_TektonBuild.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/jercicio6_TektonBuild.JPG]
+
+
+
 #Ejercicio6 Contruye y empuja 
   
 #Creamos la task de buildah 
@@ -432,6 +442,7 @@
   kubecetl logs -n {{namespace}} {{nombre del pod}}
 
 #images build and push 
+
 (images/Ejercicio6_Build_and_Push.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Ejercicio6_Build_and_Push.JPG]
   
 # Creacion de Pipelines de tarea que realice un git-clone, utilice imagen de maven para empaquetar nuestro proyecto y realice un buildha al hub de docker 
