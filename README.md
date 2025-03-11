@@ -4,12 +4,15 @@ Este proyecto es una solución integral diseñada para optimizar los procesos op
 
 
 # Clonar el repositorio
+
 https://github.com/vianeyfloresB93/gestionCobrosInventarios.git
 
 #navegar por el directorio del proyecto 
+
 cd ../gestionCobrosInventarios
 
 #crear branch a partir de la rama feature/dev. Esta nueva rama tendrá el nombre del usuario
+
 git switch feature/dev
 git checkout -b vianeyflores
 git push origin vianeyflores
@@ -24,40 +27,52 @@ git push origin entregableX
 # Trabajando con el proyecto 
 
 #Cambia a la rama de destino
+
 git checkout main
 
 #Trae los cambios más recientes
+
 git pull origin main
 
 #Realiza el merge de la rama fuente
+
 git merge feature-branch
 
 #Resolver conflictos si los hay, luego agregar archivos resueltos. 
+
 git add nombre-del-archivo-afectado 
 
 #Finaliza el merge.
+
 git commit
 
 #Empuja los cambios al repositorio remoto
+
 git push origin main
 
 #otros comandos [subir cambios  a la rama]
 #descarga los ultimos cambios  
+
 git pull origin <nombre-de-la-rama>
 
 #visualiza los archivos modificados 
+
 git status 
 
 #agregar archivos resueltos
+
 git add <archivo-modificado>
 
 #También puedes agregar todos los archivos modificados 
+
 git add . 
 
 #agrega un comentario 
+
 git commit -m "descripción"
 
 #enviar al repositorio los nuevos cambios 
+
 git push origin <rama>
 
 # Trabajando CI/CD 
@@ -219,7 +234,7 @@ b02e-803519aff129.k8s.civo.com
 
 #Configuración del  WebHook 
 
-(images/) []
+(images/ConfiguracionWeebHook.JPG) [https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/ConfiguracionWeebHook.JPG]
 
 #Paso 2 configuracion WebHook
 
@@ -239,27 +254,34 @@ Ell resultado deberá de verse como la pantalla
 mostrada abajo:
 
 
-(images/paso2_WebHook) []
+(images/Paso2_configuracionWebHook.JPG) [https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Paso5_configuracionWebHook.JPG]
 
 #Paso 3 configuracion WebHook
 
-(images/)[]
+(images/Paso3_configuracionWebHook.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Paso3_configuracionWebHook.JPG]
 
 #Paso 4 Realiza la prueba de conexión entre el WebHook y el Tekton Trigger
 
 #Result Refrenece Image: 
 
-(images/)[]
+(images/Result_WebHoock.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Result_WebHoock.JPG]
 
 # Test WebHook Proyecto Final
+
 Para testear el CI/CD se requiere realizar un commit a nivel de la rama main para activar el CI/CD en el pod del proyecto 
 
 #images Reference 
-(images/)[]
-(images/)[]
+
+(images/TestResult.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Test1.JPG]
+
+(images/TestPod.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Test1_Pod.JPG]
 
 # Test del laboratorio4
+
 #Laboratorio 4_ prueba pipeline e2e
+
 > Verificación de mi CI/CD desde mi repositorio vianeyfloresB93 gestionCobrosInventarios
+
 #prueba trigger Ejercicio9_tekton_event_listener
+
 #prueba trigger 
