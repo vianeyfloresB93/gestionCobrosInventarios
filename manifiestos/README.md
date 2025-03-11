@@ -1,5 +1,4 @@
 # Ejercicio 6 
-
 #Se realiza la configuracion para acceder al clouster 
 
 
@@ -126,7 +125,8 @@
    kubectl apply -f nombreArchivo.yaml 
 #comando para ver los logs 
   tkn taskrun logs nombre -f 
-   
+#image ServiceAccount
+(images/Ejercicio6_ServiceAccount.PNG) [https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Ejercicio6_ServiceAccount.PNG] 
   
 # Ejercicio 6. Hello World#
    
@@ -145,8 +145,6 @@
    script: | 
 #!/bin/sh 
    echo "Hello, World from Tekton!" 
-   
-  
   
 #Se crea la taskRun 
 
@@ -168,7 +166,10 @@
   
 #visualizamos los logs 
   tkn taskrun logs hello-world-run -f 
-  
+  #images Hello World 
+ (images/Ejercicio6_HelloWorldPod.PNG) [https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Ejercicio6_HelloWorldPod.JPG] 
+ (images/Ejercicio6_HelloWorldLog.PNG) [https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Practica6_HelloWorldLog.JPG] 
+ 
 # Ejercicio 6 git - clone#
   
 #Clonamos la task de git-clone 
@@ -194,6 +195,9 @@
   
 #verificamos los logs 
   kubecetl logs -n {{namespace}} {{nombre del pod}}
+  
+#Image Git Clone 
+(images/Ejercicio6_gitClone.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Ejercicio6_gitClone.JPG]
   
 ## Ejercicio 6. tekton list dir 
   
@@ -254,7 +258,7 @@
   
 #verificamos los logs 
   kubecetl logs -n {{namespace}} {{nombre del pod}}
-  
+
 # Ejercicio 6 construye la aplicacion java#
 #creamos la task de maven 
 
@@ -337,7 +341,10 @@
   
 #verificamos los logs 
   kubecetl logs -n {{namespace}} {{nombre del pod}}
-  
+
+
+#image Build
+(images/jercicio6_TektonBuild.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/jercicio6_TektonBuild.JPG]
 #Ejercicio6 Contruye y empuja 
   
 #Creamos la task de buildah 
@@ -423,7 +430,9 @@
   
 #verificamos los logs 
   kubecetl logs -n {{namespace}} {{nombre del pod}}
-  
+
+#images build and push 
+(images/Ejercicio6_Build_and_Push.JPG)[https://github.com/vianeyfloresB93/gestionCobrosInventarios/blob/main/images/Ejercicio6_Build_and_Push.JPG]
   
 # Creacion de Pipelines de tarea que realice un git-clone, utilice imagen de maven para empaquetar nuestro proyecto y realice un buildha al hub de docker 
  apiVersion: tekton.dev/v1beta1
